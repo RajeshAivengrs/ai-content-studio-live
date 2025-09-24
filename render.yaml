@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ai-content-studio-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY  
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        value: "your-secure-jwt-secret-key-change-this"
+      - key: DATABASE_URL
+        value: "sqlite:///./ai_content_studio.db"
+      - key: REDIS_URL
+        value: "redis://localhost:6379"
+      - key: PORT
+        value: "10000"
+    healthCheckPath: /health
+    autoDeploy: true
